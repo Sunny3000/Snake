@@ -1,0 +1,76 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.startBtn {
+	position: absolute;
+	left: calc(50% - 50px);
+	top: 100px;
+	width: 100px;
+	height: 40px;
+	padding: 2px;
+	font-size: 36px;
+	font-weight: bold;
+	color: #fff;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 8px;
+	background-color: #abcdef;
+	cursor: pointer;
+	box-shadow: 3px 3px 3px #ccc;
+	transition: all .6s;
+}
+
+.startBtn:hover {
+	transform: scale(1.25);
+	transition: all .6s;
+}
+
+.chess_board {
+	position: absolute;
+	left: calc(50% - 250px);
+	top: calc(50% - 250px);
+	width: 500px;
+	height: 500px;
+	/*border: 1px solid #000;*/
+	font-size: 0;
+}
+
+.square {
+	display: inline-block;
+	background-color: #abcdef;
+	width: 20px;
+	height: 20px;
+	box-sizing: border-box;
+	border-left: 1px dashed #999;
+	border-top: 1px dashed #999;
+}
+
+.ball {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
