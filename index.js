@@ -1,10 +1,10 @@
-var chessBoard,		//棋盘
-	squareSet;		//格子
-var toward = {		//方向
-	UP: {x: 0, y: 1},
-	DOWN: {x: 0, y: -1},
-	LEFT: {x: -1, y: 0},
-	RIGHT: {x: 1, y: 0}
+var chessBoard,     //棋盘
+    squareSet;      //格子
+var toward = {      //方向
+    UP: {x: 0, y: 1},
+    DOWN: {x: 0, y: -1},
+    LEFT: {x: -1, y: 0},
+    RIGHT: {x: 1, y: 0}
 }
 var timer;
 var frame = 40;
@@ -15,47 +15,47 @@ var maxThingSize = 20;//允许存在的物体数量
 var things = [];//所有生成的物体存放在这个集合中
 
 window.onload = function () {
-	chessBoard = document.getElementById('chess_board');
-	initChess();
-	initSnake();
-	repaint();
+    chessBoard = document.getElementById('chess_board');
+    initChess();
+    initSnake();
+    repaint();
 }
 
 
 //初始化场地
 function initChess() {
-	squareSet = new Array(25);
-	for (var i = 0; i < squareSet.length; i ++) {
-		squareSet[i] = new Array(25);
-		for (var j = 0; j < squareSet[i].length; j ++) {
-			squareSet[i][j] = document.createElement('div');
-			squareSet[i][j].classList.add('square');
-			chessBoard.appendChild(squareSet[i][j]);
-		}
-	}
+    squareSet = new Array(25);
+    for (var i = 0; i < squareSet.length; i ++) {
+        squareSet[i] = new Array(25);
+        for (var j = 0; j < squareSet[i].length; j ++) {
+            squareSet[i][j] = document.createElement('div');
+            squareSet[i][j].classList.add('square');
+            chessBoard.appendChild(squareSet[i][j]);
+        }
+    }
 
 }
 
 
 //贪吃蛇的构造函数
 function Snake(headX, headY, nowToward, length, bgColor) {
-	this.snakeBody = [];
-	this.nowToward = nowToward;
-	this.headMoveX = nowToward.x;
-	this.headMoveY = nowToward.y;
-	this.bgColor = bgColor;
-	this.changeToward = null;
-	this.changeNextStation = 0;
-	this.init = function(headX, headY, nowToward, length, bgColor) {
-		for (var i = 0; i < length; i ++) {
-			this.grow(headX, headY, bgColor);
-		}
-	}
-	this.grow = function (headX, headY, bgColor) {
-		var ball;
-		if (this.snakeBody == 0) {
-			ball = createBall(headX, headY, 'yellow');
-		} else if (this.snakeBody[this.snakeBody.length - 1].point.length == 0) {//蛇尾距离蛇头之间没有拐点
+    this.snakeBody = [];
+    this.nowToward = nowToward;
+    this.headMoveX = nowToward.x;
+    this.headMoveY = nowToward.y;
+    this.bgColor = bgColor;
+    this.changeToward = null;
+    this.changeNextStation = 0;
+    this.init = function(headX, headY, nowToward, length, bgColor) {
+        for (var i = 0; i < length; i ++) {
+            this.grow(headX, headY, bgColor);
+        }
+    }
+    this.grow = function (headX, headY, bgColor) {
+        var ball;
+        if (this.snakeBody == 0) {
+            ball = createBall(headX, headY, 'yellow');
+        } else if (this.snakeBody[this.snakeBody.length - 1].point.length == 0) {//蛇尾距离蛇头之间没有拐点
             var lastBody = this.snakeBody[this.snakeBody.length - 1];
             ball = createBall(lastBody.x + -1 * this.nowToward.x * 20, lastBody.y + -1 * this.nowToward.y * 20, bgColor);
         } else {//蛇尾距离蛇头有拐点，遵循拐点方向
@@ -64,10 +64,10 @@ function Snake(headX, headY, nowToward, length, bgColor) {
             ball = createBall(lastBody.x + -1 * point.speedX * 20, lastBody.y + -1 * point.speedY * 20, bgColor);
             ball.point = clone(lastBody.point);
         }
-		this.snakeBody.push(ball);
-	}
-	this.init(headX, headY, nowToward, length, bgColor);
-	this.turnUp = function () {//向上转动
+        this.snakeBody.push(ball);
+    }
+    this.init(headX, headY, nowToward, length, bgColor);
+    this.turnUp = function () {//向上转动
         this.nowToward = toward.UP;
         change(this, 0, -1);
     }
@@ -86,7 +86,7 @@ function Snake(headX, headY, nowToward, length, bgColor) {
     this.over = function () {//这条蛇就这么挂了。如果是玩家的蛇，那么游戏结束。
         if (protagonist == this) {
             clearInterval(timer);
-        	clearInterval(thingFactory.autoGenerateTimer);
+            clearInterval(thingFactory.autoGenerateTimer);
             alert("游戏结束");
         } else {
             for (var i = 0 ; i < this.snakeBody.length ; i ++) {
@@ -102,30 +102,30 @@ function Snake(headX, headY, nowToward, length, bgColor) {
 
 //初始化贪吃蛇
 function initSnake() {
-	protagonist = new Snake(40, 0, toward.RIGHT, 3, 'pink');
-	snake.push(protagonist);
+    protagonist = new Snake(40, 0, toward.RIGHT, 3, 'pink');
+    snake.push(protagonist);
 }
 
 
 //创建body
 function createBall(x, y, bgColor) {
-	var ball = document.createElement('div');
-	ball.classList.add('ball');
-	ball.style.left = x + 'px';
-	ball.style.top = y + 'px';
-	ball.x = x;
-	ball.y = y;
-	ball.point = [];
-	ball.style.backgroundColor = bgColor;
-	chessBoard.appendChild(ball);
-	return ball;
+    var ball = document.createElement('div');
+    ball.classList.add('ball');
+    ball.style.left = x + 'px';
+    ball.style.top = y + 'px';
+    ball.x = x;
+    ball.y = y;
+    ball.point = [];
+    ball.style.backgroundColor = bgColor;
+    chessBoard.appendChild(ball);
+    return ball;
 }
 
 
 function move() {
-	for (var i = 0; i < snake.length; i ++) {
-		for (var j = 0; j < snake[i].snakeBody.length; j ++) {
-			if (snake[i].snakeBody[j].point.length > 0) {
+    for (var i = 0; i < snake.length; i ++) {
+        for (var j = 0; j < snake[i].snakeBody.length; j ++) {
+            if (snake[i].snakeBody[j].point.length > 0) {
                 snake[i].snakeBody[j].x += snake[i].snakeBody[j].point[0].speedX;
                 snake[i].snakeBody[j].y += snake[i].snakeBody[j].point[0].speedY;
                 if (snake[i].snakeBody[j].x == snake[i].snakeBody[j].point[0].x && snake[i].snakeBody[j].y == snake[i].snakeBody[j].point[0].y) {
@@ -135,22 +135,22 @@ function move() {
                 snake[i].snakeBody[j].x += snake[i].headMoveX;
                 snake[i].snakeBody[j].y += snake[i].headMoveY;
             }
-		}
+        }
 
-		
-	}
-	repaint();
+        
+    }
+    repaint();
 }
 
 
 function repaint() {
-	for (var i = 0; i < snake.length; i ++) {
-		for (var j = 0; j < snake[i].snakeBody.length; j ++) {
-			snake[i].snakeBody[j].style.left = snake[i].snakeBody[j].x + "px";
-			snake[i].snakeBody[j].style.top = snake[i].snakeBody[j].y + "px";
-		}
-	}
-	for (var i = 0 ; i < things.length ; i ++) {
+    for (var i = 0; i < snake.length; i ++) {
+        for (var j = 0; j < snake[i].snakeBody.length; j ++) {
+            snake[i].snakeBody[j].style.left = snake[i].snakeBody[j].x + "px";
+            snake[i].snakeBody[j].style.top = snake[i].snakeBody[j].y + "px";
+        }
+    }
+    for (var i = 0 ; i < things.length ; i ++) {
         things[i].style.left = things[i].x + "px";
         things[i].style.top = things[i].y + "px";
         things[i].style.display = "block";
@@ -189,9 +189,9 @@ function tryChangeToward() {//尝试进行转弯，因为有的方向时不需�
 
 
 function start() {
-	// clearInterval(timer);
-	timer = setInterval(function () {//开始计时器，刷新频率为上面初始化的数值
-		tryChangeToward();
+    // clearInterval(timer);
+    timer = setInterval(function () {//开始计时器，刷新频率为上面初始化的数值
+        tryChangeToward();
         move();//蛇移动
         checkCrash();//检查碰撞
     }, 1000 / frame);
